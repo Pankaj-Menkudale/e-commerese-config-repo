@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+    <Properties>
+        <Property name="SERVICE_NAME">${spring:spring.application.name}</Property>
+        <Property name="LOG_PATH">logs/${SERVICE_NAME}</Property>
+    </Properties>
+
+    <Appenders>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [${SERVICE_NAME}] [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <File name="FileLogger" fileName="${LOG_PATH}/app.log" append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [${SERVICE_NAME}] [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+
+        <File name="JSONLogger" fileName="${LOG_PATH}/app.json" append="true">
+            <JsonLayout complete="false" compact="true"/>
+        </File>
+
+    </Appenders>
+
+    <Loggers>
+
+        <Logger name="com.codelab.config_server" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileLogger"/>
+            <AppenderRef ref="JSONLogger"/>
+        </Logger>
+
+        <Logger name="org.springframework" level="warn"/>
+
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileLogger"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>
